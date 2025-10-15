@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "FiscalDocuments.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FiscalDocuments.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FiscalDocuments.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FiscalDocuments.Application.dll": {}
+        }
+      },
+      "FiscalDocuments.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/FiscalDocuments.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FiscalDocuments.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "FiscalDocuments.Application/1.0.0": {
+      "type": "project",
+      "path": "../FiscalDocuments.Application/FiscalDocuments.Application.csproj",
+      "msbuildProject": "../FiscalDocuments.Application/FiscalDocuments.Application.csproj"
+    },
+    "FiscalDocuments.Domain/1.0.0": {
+      "type": "project",
+      "path": "../FiscalDocuments.Domain/FiscalDocuments.Domain.csproj",
+      "msbuildProject": "../FiscalDocuments.Domain/FiscalDocuments.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "FiscalDocuments.Application >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\sando\\.nuget\\packages\\": {},
@@ -41,7 +78,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Application\\FiscalDocuments.Application.csproj": {
+              "projectPath": "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Application\\FiscalDocuments.Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

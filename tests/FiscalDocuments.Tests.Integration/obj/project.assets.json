@@ -8,6 +8,25 @@
           "build/netstandard2.0/coverlet.collector.targets": {}
         }
       },
+      "Microsoft.AspNetCore.OpenApi/9.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.17"
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.CodeCoverage/17.12.0": {
         "type": "package",
         "compile": {
@@ -39,6 +58,19 @@
         },
         "buildMultiTargeting": {
           "buildMultiTargeting/Microsoft.NET.Test.Sdk.props": {}
+        }
+      },
+      "Microsoft.OpenApi/1.6.17": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "related": ".pdb;.xml"
+          }
         }
       },
       "Microsoft.TestPlatform.ObjectModel/17.12.0": {
@@ -411,6 +443,60 @@
         "build": {
           "build/net6.0/xunit.runner.visualstudio.props": {}
         }
+      },
+      "FiscalDocuments.Api/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FiscalDocuments.Application": "1.0.0",
+          "FiscalDocuments.Infrastructure": "1.0.0",
+          "Microsoft.AspNetCore.OpenApi": "9.0.3"
+        },
+        "compile": {
+          "bin/placeholder/FiscalDocuments.Api.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FiscalDocuments.Api.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "FiscalDocuments.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FiscalDocuments.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FiscalDocuments.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FiscalDocuments.Application.dll": {}
+        }
+      },
+      "FiscalDocuments.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/FiscalDocuments.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FiscalDocuments.Domain.dll": {}
+        }
+      },
+      "FiscalDocuments.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FiscalDocuments.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FiscalDocuments.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FiscalDocuments.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -483,6 +569,22 @@
         "coverlet-icon.png",
         "coverlet.collector.6.0.2.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.OpenApi/9.0.3": {
+      "sha512": "fKh0UyGMUE+lhbovMhh3g88b9bT+y2jfZIuJ8ljY7rcCaSJ9m2Qqqbh66oULFfzWE2BUAmimzTGcPcq3jXi/Ew==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.openapi/9.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll",
+        "lib/net9.0/Microsoft.AspNetCore.OpenApi.xml",
+        "microsoft.aspnetcore.openapi.9.0.3.nupkg.sha512",
+        "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
     "Microsoft.CodeCoverage/17.12.0": {
@@ -571,6 +673,21 @@
         "lib/netcoreapp3.1/_._",
         "microsoft.net.test.sdk.17.12.0.nupkg.sha512",
         "microsoft.net.test.sdk.nuspec"
+      ]
+    },
+    "Microsoft.OpenApi/1.6.17": {
+      "sha512": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA==",
+      "type": "package",
+      "path": "microsoft.openapi/1.6.17",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/netstandard2.0/Microsoft.OpenApi.dll",
+        "lib/netstandard2.0/Microsoft.OpenApi.pdb",
+        "lib/netstandard2.0/Microsoft.OpenApi.xml",
+        "microsoft.openapi.1.6.17.nupkg.sha512",
+        "microsoft.openapi.nuspec"
       ]
     },
     "Microsoft.TestPlatform.ObjectModel/17.12.0": {
@@ -932,10 +1049,31 @@
         "xunit.runner.visualstudio.2.8.2.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "FiscalDocuments.Api/1.0.0": {
+      "type": "project",
+      "path": "../../src/FiscalDocuments.Api/FiscalDocuments.Api.csproj",
+      "msbuildProject": "../../src/FiscalDocuments.Api/FiscalDocuments.Api.csproj"
+    },
+    "FiscalDocuments.Application/1.0.0": {
+      "type": "project",
+      "path": "../../src/FiscalDocuments.Application/FiscalDocuments.Application.csproj",
+      "msbuildProject": "../../src/FiscalDocuments.Application/FiscalDocuments.Application.csproj"
+    },
+    "FiscalDocuments.Domain/1.0.0": {
+      "type": "project",
+      "path": "../../src/FiscalDocuments.Domain/FiscalDocuments.Domain.csproj",
+      "msbuildProject": "../../src/FiscalDocuments.Domain/FiscalDocuments.Domain.csproj"
+    },
+    "FiscalDocuments.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../../src/FiscalDocuments.Infrastructure/FiscalDocuments.Infrastructure.csproj",
+      "msbuildProject": "../../src/FiscalDocuments.Infrastructure/FiscalDocuments.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "FiscalDocuments.Api >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.12.0",
       "coverlet.collector >= 6.0.2",
       "xunit >= 2.9.2",
@@ -976,7 +1114,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Api\\FiscalDocuments.Api.csproj": {
+              "projectPath": "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Api\\FiscalDocuments.Api.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
