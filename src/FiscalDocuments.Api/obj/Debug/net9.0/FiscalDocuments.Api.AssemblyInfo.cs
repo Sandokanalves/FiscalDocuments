@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FiscalDocuments.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8857ee6b90b9e01189d319d17633e4d567102322")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5052ec4411a43883bebf0c7b60b0f2fe1cd0f3a3")]
 [assembly: System.Reflection.AssemblyProductAttribute("FiscalDocuments.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FiscalDocuments.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

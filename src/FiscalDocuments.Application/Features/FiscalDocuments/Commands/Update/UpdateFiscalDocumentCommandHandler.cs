@@ -29,3 +29,4 @@ public class UpdateFiscalDocumentCommandHandler : IRequestHandler<UpdateFiscalDo
     }
 }
 
+
