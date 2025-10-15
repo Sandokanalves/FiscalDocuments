@@ -17,7 +17,6 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         builder.ConfigureServices(services =>
         {
-            // Remove the app's AppDbContext registration.
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
                     typeof(DbContextOptions<AppDbContext>));
@@ -27,7 +26,6 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(descriptor);
             }
 
-            // Add AppDbContext using an in-memory database for testing.
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("InMemoryDbForTesting");
@@ -57,4 +55,5 @@ public class FiscalDocumentsControllerTests
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
+
 

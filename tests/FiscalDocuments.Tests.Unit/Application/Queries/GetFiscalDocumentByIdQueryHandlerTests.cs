@@ -21,7 +21,6 @@ public class GetFiscalDocumentByIdQueryHandlerTests
     [Fact]
     public async Task Handle_Should_ReturnFiscalDocumentDto_WhenDocumentExists()
     {
-        // Arrange
         var documentId = Guid.NewGuid();
         var fiscalDocument = new FiscalDocument("access-key", "issuer-cnpj", "recipient-cnpj", DateTime.UtcNow, 100);
 
@@ -30,10 +29,8 @@ public class GetFiscalDocumentByIdQueryHandlerTests
 
         var query = new GetFiscalDocumentByIdQuery { Id = documentId };
 
-        // Act
         var result = await _handler.Handle(query, CancellationToken.None);
 
-        // Assert
         result.Should().NotBeNull();
         result.AccessKey.Should().Be(fiscalDocument.AccessKey);
         _repositoryMock.Verify(r => r.GetByIdAsync(documentId, It.IsAny<CancellationToken>()), Times.Once);
@@ -42,18 +39,17 @@ public class GetFiscalDocumentByIdQueryHandlerTests
     [Fact]
     public async Task Handle_Should_ReturnNull_WhenDocumentDoesNotExist()
     {
-        // Arrange
         var documentId = Guid.NewGuid();
         _repositoryMock.Setup(r => r.GetByIdAsync(documentId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((FiscalDocument?)null);
 
         var query = new GetFiscalDocumentByIdQuery { Id = documentId };
 
-        // Act
         var result = await _handler.Handle(query, CancellationToken.None);
 
-        // Assert
         result.Should().BeNull();
     }
 }
+
+
 
