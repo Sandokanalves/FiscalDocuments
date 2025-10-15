@@ -36,6 +36,9 @@ namespace FiscalDocuments.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DocumentNumber")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
@@ -44,12 +47,28 @@ namespace FiscalDocuments.Infrastructure.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
-                    b.Property<string>("RecipientCnpj")
+                    b.Property<string>("IssuerName")
                         .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Model")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RecipientDocument")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Series")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalProducts")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -58,6 +77,167 @@ namespace FiscalDocuments.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("FiscalDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("FiscalDocuments.Domain.Entities.ProductItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Cfop")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("FiscalDocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Ncm")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FiscalDocumentId");
+
+                    b.ToTable("ProductItem");
+                });
+
+            modelBuilder.Entity("FiscalDocuments.Domain.Entities.FiscalDocument", b =>
+                {
+                    b.OwnsOne("FiscalDocuments.Domain.ValueObjects.Address", "IssuerAddress", b1 =>
+                        {
+                            b1.Property<Guid>("FiscalDocumentId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("CityCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerCityCode");
+
+                            b1.Property<string>("CityName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerCityName");
+
+                            b1.Property<string>("District")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerDistrict");
+
+                            b1.Property<string>("Number")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerNumber");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerState");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerStreet");
+
+                            b1.Property<string>("ZipCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("IssuerZipCode");
+
+                            b1.HasKey("FiscalDocumentId");
+
+                            b1.ToTable("FiscalDocuments");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FiscalDocumentId");
+                        });
+
+                    b.OwnsOne("FiscalDocuments.Domain.ValueObjects.Address", "RecipientAddress", b1 =>
+                        {
+                            b1.Property<Guid>("FiscalDocumentId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("CityCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientCityCode");
+
+                            b1.Property<string>("CityName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientCityName");
+
+                            b1.Property<string>("District")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientDistrict");
+
+                            b1.Property<string>("Number")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientNumber");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientState");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientStreet");
+
+                            b1.Property<string>("ZipCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("RecipientZipCode");
+
+                            b1.HasKey("FiscalDocumentId");
+
+                            b1.ToTable("FiscalDocuments");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FiscalDocumentId");
+                        });
+
+                    b.Navigation("IssuerAddress")
+                        .IsRequired();
+
+                    b.Navigation("RecipientAddress")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FiscalDocuments.Domain.Entities.ProductItem", b =>
+                {
+                    b.HasOne("FiscalDocuments.Domain.Entities.FiscalDocument", "FiscalDocument")
+                        .WithMany("Items")
+                        .HasForeignKey("FiscalDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FiscalDocument");
+                });
+
+            modelBuilder.Entity("FiscalDocuments.Domain.Entities.FiscalDocument", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

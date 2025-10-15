@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FiscalDocuments.Tests.Architecture")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f92e476b2ae7f48af1e4c5d0aee15b8bf3e0cec4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd6bf3d24f5b41ea18bcb138a3f89b12d4342b0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FiscalDocuments.Tests.Architecture")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FiscalDocuments.Tests.Architecture")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

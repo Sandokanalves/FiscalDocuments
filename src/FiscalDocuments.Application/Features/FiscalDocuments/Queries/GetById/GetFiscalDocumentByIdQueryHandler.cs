@@ -25,10 +25,38 @@ public class GetFiscalDocumentByIdQueryHandler : IRequestHandler<GetFiscalDocume
         {
             Id = fiscalDocument.Id,
             AccessKey = fiscalDocument.AccessKey,
-            IssuerCnpj = fiscalDocument.IssuerCnpj,
-            RecipientCnpj = fiscalDocument.RecipientCnpj,
             IssueDate = fiscalDocument.IssueDate,
-            TotalAmount = fiscalDocument.TotalAmount
+            IssuerName = fiscalDocument.IssuerName,
+            IssuerCnpj = fiscalDocument.IssuerCnpj,
+            IssuerAddress = new AddressDto
+            {
+                Street = fiscalDocument.IssuerAddress.Street,
+                Number = fiscalDocument.IssuerAddress.Number,
+                District = fiscalDocument.IssuerAddress.District,
+                CityName = fiscalDocument.IssuerAddress.CityName,
+                State = fiscalDocument.IssuerAddress.State,
+                ZipCode = fiscalDocument.IssuerAddress.ZipCode
+            },
+            RecipientName = fiscalDocument.RecipientName,
+            RecipientDocument = fiscalDocument.RecipientDocument,
+            RecipientAddress = new AddressDto
+            {
+                Street = fiscalDocument.RecipientAddress.Street,
+                Number = fiscalDocument.RecipientAddress.Number,
+                District = fiscalDocument.RecipientAddress.District,
+                CityName = fiscalDocument.RecipientAddress.CityName,
+                State = fiscalDocument.RecipientAddress.State,
+                ZipCode = fiscalDocument.RecipientAddress.ZipCode
+            },
+            TotalAmount = fiscalDocument.TotalAmount,
+            Items = fiscalDocument.Items.Select(i => new ProductItemDto
+            {
+                ProductCode = i.ProductCode,
+                Description = i.Description,
+                Quantity = i.Quantity,
+                UnitPrice = i.UnitPrice,
+                TotalPrice = i.TotalPrice
+            }).ToList()
         };
     }
 }

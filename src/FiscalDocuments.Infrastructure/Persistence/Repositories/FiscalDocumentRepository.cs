@@ -31,10 +31,18 @@ public class FiscalDocumentRepository : IFiscalDocumentRepository
         return await _context.FiscalDocuments.FindAsync(new object[] { id }, cancellationToken);
     }
 
-    public async Task<IEnumerable<FiscalDocument>> ListAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<FiscalDocument>> ListAsync(int pageNumber, int pageSize, string? issuerCnpj, CancellationToken cancellationToken)
     {
-        return await _context.FiscalDocuments
-            .AsNoTracking()
+        var query = _context.FiscalDocuments.AsNoTracking();
+
+        if (!string.IsNullOrWhiteSpace(issuerCnpj))
+        {
+            query = query.Where(f => f.IssuerCnpj == issuerCnpj);
+        }
+
+        return await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
     }
 
@@ -54,5 +62,6 @@ public class FiscalDocumentRepository : IFiscalDocumentRepository
         }
     }
 }
+
 
 

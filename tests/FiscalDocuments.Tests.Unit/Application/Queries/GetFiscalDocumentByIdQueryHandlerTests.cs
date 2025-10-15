@@ -2,6 +2,7 @@ using FluentAssertions;
 using FiscalDocuments.Application.Features.FiscalDocuments.Queries.GetById;
 using FiscalDocuments.Domain.Entities;
 using FiscalDocuments.Domain.Interfaces;
+using FiscalDocuments.Domain.ValueObjects;
 using Moq;
 using Xunit;
 
@@ -22,7 +23,13 @@ public class GetFiscalDocumentByIdQueryHandlerTests
     public async Task Handle_Should_ReturnFiscalDocumentDto_WhenDocumentExists()
     {
         var documentId = Guid.NewGuid();
-        var fiscalDocument = new FiscalDocument("access-key", "issuer-cnpj", "recipient-cnpj", DateTime.UtcNow, 100);
+        var address = new Address("street", "123", "district", "3550308", "Sao Paulo", "SP", "01000000");
+        var fiscalDocument = new FiscalDocument(
+            "access-key", 55, 1, 123, DateTime.UtcNow,
+            "Issuer Name", "11111111000111", address,
+            "Recipient Name", "22222222000122", address,
+            100, 100
+        );
 
         _repositoryMock.Setup(r => r.GetByIdAsync(documentId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(fiscalDocument);
@@ -32,7 +39,7 @@ public class GetFiscalDocumentByIdQueryHandlerTests
         var result = await _handler.Handle(query, CancellationToken.None);
 
         result.Should().NotBeNull();
-        result.AccessKey.Should().Be(fiscalDocument.AccessKey);
+        result!.AccessKey.Should().Be(fiscalDocument.AccessKey);
         _repositoryMock.Verify(r => r.GetByIdAsync(documentId, It.IsAny<CancellationToken>()), Times.Once);
     }
 
@@ -50,6 +57,4 @@ public class GetFiscalDocumentByIdQueryHandlerTests
         result.Should().BeNull();
     }
 }
-
-
 

@@ -14,18 +14,21 @@ public class ListFiscalDocumentsQueryHandler : IRequestHandler<ListFiscalDocumen
 
     public async Task<IEnumerable<FiscalDocumentDto>> Handle(ListFiscalDocumentsQuery request, CancellationToken cancellationToken)
     {
-        var fiscalDocuments = await _repository.ListAsync(cancellationToken);
+        var fiscalDocuments = await _repository.ListAsync(request.PageNumber, request.PageSize, request.IssuerCnpj, cancellationToken);
 
         return fiscalDocuments.Select(doc => new FiscalDocumentDto
         {
             Id = doc.Id,
             AccessKey = doc.AccessKey,
-            IssuerCnpj = doc.IssuerCnpj,
-            RecipientCnpj = doc.RecipientCnpj,
             IssueDate = doc.IssueDate,
+            IssuerName = doc.IssuerName,
+            IssuerCnpj = doc.IssuerCnpj,
+            RecipientName = doc.RecipientName,
+            RecipientDocument = doc.RecipientDocument,
             TotalAmount = doc.TotalAmount
         });
     }
 }
+
 
 

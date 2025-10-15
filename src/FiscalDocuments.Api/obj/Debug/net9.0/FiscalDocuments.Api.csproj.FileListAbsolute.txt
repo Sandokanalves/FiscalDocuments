@@ -170,3 +170,10 @@ C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\ru
 C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\FluentValidation.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\MediatR.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\MediatR.Contracts.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

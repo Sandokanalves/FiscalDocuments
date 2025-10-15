@@ -34,9 +34,8 @@ public class FiscalDocumentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> ListDocuments()
+    public async Task<IActionResult> ListDocuments([FromQuery] Application.Features.FiscalDocuments.Queries.List.ListFiscalDocumentsQuery query)
     {
-        var query = new Application.Features.FiscalDocuments.Queries.List.ListFiscalDocumentsQuery();
         var documents = await _mediator.Send(query);
         return Ok(documents);
     }
@@ -69,6 +68,7 @@ public class FiscalDocumentsController : ControllerBase
         return result ? NoContent() : NotFound();
     }
 }
+
 
 
 
