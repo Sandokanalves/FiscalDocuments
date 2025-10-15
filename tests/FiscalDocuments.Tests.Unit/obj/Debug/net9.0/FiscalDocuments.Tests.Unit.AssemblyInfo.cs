@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FiscalDocuments.Tests.Unit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42b507554fde97026079129b1bd2f851c6d3e5e0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8857ee6b90b9e01189d319d17633e4d567102322")]
 [assembly: System.Reflection.AssemblyProductAttribute("FiscalDocuments.Tests.Unit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FiscalDocuments.Tests.Unit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

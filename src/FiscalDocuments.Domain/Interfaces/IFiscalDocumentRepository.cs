@@ -8,6 +8,9 @@ public interface IFiscalDocumentRepository
     Task<FiscalDocument?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<FiscalDocument?> GetByAccessKeyAsync(string accessKey, CancellationToken cancellationToken);
     Task<IEnumerable<FiscalDocument>> ListAsync(CancellationToken cancellationToken);
+    Task UpdateAsync(FiscalDocument fiscalDocument, CancellationToken cancellationToken);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 }
+
 
 

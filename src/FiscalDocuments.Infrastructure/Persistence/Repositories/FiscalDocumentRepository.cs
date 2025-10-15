@@ -37,5 +37,22 @@ public class FiscalDocumentRepository : IFiscalDocumentRepository
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
+
+    public async Task UpdateAsync(FiscalDocument fiscalDocument, CancellationToken cancellationToken)
+    {
+        _context.FiscalDocuments.Update(fiscalDocument);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var document = await _context.FiscalDocuments.FindAsync(new object[] { id }, cancellationToken);
+        if (document != null)
+        {
+            _context.FiscalDocuments.Remove(document);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+    }
 }
+
 

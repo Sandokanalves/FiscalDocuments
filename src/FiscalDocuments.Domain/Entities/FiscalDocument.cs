@@ -22,6 +22,18 @@ public class FiscalDocument
         TotalAmount = totalAmount;
         CreatedAt = DateTime.UtcNow;
     }
+
+    public void UpdateTotalAmount(decimal newTotalAmount)
+    {
+        if (newTotalAmount < 0)
+        {
+            throw new ArgumentException("O valor total não pode ser negativo.", nameof(newTotalAmount));
+        }
+
+        TotalAmount = newTotalAmount;
+    }
 }
+
+
 
 
