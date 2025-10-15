@@ -1,0 +1,16 @@
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\bin\Debug\net9.0\FiscalDocuments.Application.deps.json
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\bin\Debug\net9.0\FiscalDocuments.Application.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\bin\Debug\net9.0\FiscalDocuments.Application.pdb
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\bin\Debug\net9.0\FiscalDocuments.Domain.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\bin\Debug\net9.0\FiscalDocuments.Domain.pdb
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.csproj.AssemblyReference.cache
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.AssemblyInfoInputs.cache
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.AssemblyInfo.cs
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.csproj.CoreCompileInputs.cache
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.sourcelink.json
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDo.DE6F0AFE.Up2Date
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\refint\FiscalDocuments.Application.dll
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\FiscalDocuments.Application.pdb
+C:\Projetos pessoais\FiscalDocuments\src\FiscalDocuments.Application\obj\Debug\net9.0\ref\FiscalDocuments.Application.dll
