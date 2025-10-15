@@ -12,9 +12,11 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(UploadFiscalDocumentCommand).Assembly));
 builder.Services.AddValidatorsFromAssembly(typeof(UploadFiscalDocumentCommand).Assembly);
 
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 builder.Services.AddScoped<IFiscalDocumentRepository, FiscalDocumentRepository>();
 
@@ -37,6 +39,7 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { }
+
 
 
 

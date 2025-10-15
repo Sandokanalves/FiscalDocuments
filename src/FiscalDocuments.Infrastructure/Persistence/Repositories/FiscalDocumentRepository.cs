@@ -28,7 +28,9 @@ public class FiscalDocumentRepository : IFiscalDocumentRepository
 
     public async Task<FiscalDocument?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.FiscalDocuments.FindAsync(new object[] { id }, cancellationToken);
+        return await _context.FiscalDocuments
+            .Include(f => f.Items)
+            .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
     }
 
     public async Task<IEnumerable<FiscalDocument>> ListAsync(int pageNumber, int pageSize, string? issuerCnpj, CancellationToken cancellationToken)
@@ -62,6 +64,7 @@ public class FiscalDocumentRepository : IFiscalDocumentRepository
         }
     }
 }
+
 
 
 

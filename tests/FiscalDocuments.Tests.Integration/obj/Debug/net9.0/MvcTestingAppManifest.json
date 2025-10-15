@@ -1,0 +1,6 @@
+{
+  "FiscalDocuments.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Api",
+  "FiscalDocuments.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Application",
+  "FiscalDocuments.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Domain",
+  "FiscalDocuments.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Projetos pessoais\\FiscalDocuments\\src\\FiscalDocuments.Infrastructure"
+}
