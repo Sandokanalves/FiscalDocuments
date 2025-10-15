@@ -1,71 +1,116 @@
 # API de Processamento de Documentos Fiscais
 
-## Visão Geral do Projeto
+## 1. Visão Geral do Projeto
 
-Esta é uma API RESTful construída com ASP.NET Core 9 para o processamento e gerenciamento de documentos fiscais (NFe, CTe, NFSe). A aplicação recebe arquivos XML, extrai dados relevantes, os persiste em um banco de dados e expõe endpoints para consulta e manipulação desses dados.
+Esta API RESTful, desenvolvida em ASP.NET Core 9, oferece uma solução robusta e escalável para o recebimento, armazenamento e consulta de documentos fiscais eletrônicos (NFe, CTe, etc.). O projeto foi construído seguindo as melhores práticas de engenharia de software, com foco em qualidade de código, manutenibilidade e testabilidade.
 
-## Decisões de Arquitetura
+O principal objetivo é fornecer uma retaguarda confiável para sistemas que precisam processar e gerenciar um grande volume de documentos fiscais, garantindo a integridade dos dados, a performance das consultas e a segurança das informações.
 
-- **Arquitetura Limpa (Clean Architecture)**: A solução foi estruturada em camadas (Domain, Application, Infrastructure, Api) para garantir baixo acoplamento, alta coesão e separação de responsabilidades. Isso torna o sistema mais testável, manutenível e flexível a mudanças tecnológicas. A "Regra de Dependência" é rigorosamente seguida, com todas as dependências apontando para o centro (Domain).
+---
 
-- **CQRS (Command Query Responsibility Segregation)**: Utilizamos o padrão CQRS, com o auxílio da biblioteca `MediatR`, para separar as operações de escrita (Commands) das operações de leitura (Queries). Isso simplifica os modelos, otimiza o desempenho para cada tipo de operação e torna a lógica da aplicação mais clara e focada.
+## 2. Decisões de Arquitetura e Princípios
 
-- **Domain-Driven Design (DDD)**: A camada de `Domain` foi modelada para ser o coração da aplicação, contendo as entidades de negócio e as regras que são independentes de qualquer framework. A entidade `FiscalDocument` encapsula seus próprios dados e comportamentos (como o método `UpdateTotalAmount`), protegendo sua consistência.
+A espinha dorsal do projeto é a **Arquitetura Limpa (Clean Architecture)**. Essa escolha não foi acidental; ela visa criar um sistema com baixo acoplamento, alta coesão e clara separação de responsabilidades, resultando em um software mais fácil de manter, testar e evoluir.
 
-- **SQL Server**: O SQL Server foi escolhido como banco de dados relacional por sua robustez, maturidade e amplo suporte no ecossistema .NET. A utilização do Entity Framework Core como ORM abstrai o acesso aos dados e facilita as migrations.
+Os seguintes princípios e padrões foram rigorosamente aplicados:
 
-## Como Rodar a Aplicação (com Docker para Desenvolvimento)
+- **Princípios SOLID**:
+
+  - **S (Single Responsibility Principle)**: Cada classe e método tem uma única responsabilidade. Por exemplo, os _Handlers_ do MediatR cuidam de uma única operação (um Command ou uma Query).
+  - **O (Open/Closed Principle)**: A arquitetura é aberta para extensão (novos casos de uso) e fechada para modificação (as camadas centrais não são alteradas).
+  - **L (Liskov Substitution Principle)**: As abstrações (interfaces) são implementadas de forma a garantir a substituibilidade sem quebrar o sistema.
+  - **I (Interface Segregation Principle)**: Interfaces são pequenas e focadas, como a `IFiscalDocumentRepository`, que define apenas o contrato necessário para a persistência.
+  - **D (Dependency Inversion Principle)**: As camadas mais internas (Domínio) não dependem das camadas externas (Infraestrutura). A dependência é invertida através de interfaces, implementadas com a Injeção de Dependência nativa do ASP.NET Core.
+
+- **Domain-Driven Design (DDD)**: O coração da aplicação, a camada de **Domínio**, foi modelada para refletir a linguagem e as regras de negócio do problema.
+
+  - **Agregado**: A entidade `FiscalDocument` atua como a raiz de agregação, garantindo a consistência de seus objetos internos, como a coleção de `ProductItem`.
+  - **Value Objects**: Objetos como `Address` foram modelados como imutáveis, representando conceitos que são definidos por seus atributos, não por uma identidade.
+
+- **Padrão CQRS (Command Query Responsibility Segregation)**: A separação entre operações de escrita (Commands) e leitura (Queries) foi implementada com a biblioteca **MediatR**.
+  - **Benefícios**: Simplifica a lógica, permite otimizações independentes para leitura e escrita, e torna os casos de uso explícitos e fáceis de encontrar no código.
+
+---
+
+## 3. Tecnologias Utilizadas
+
+- **Framework**: .NET 9
+- **API**: ASP.NET Core
+- **Banco de Dados**: SQL Server
+- **ORM**: Entity Framework Core 9
+- **Padrão de Comunicação**: CQRS com MediatR
+- **Validação**: FluentValidation
+- **Testes**: xUnit para testes unitários, de integração e de arquitetura
+- **Assertions**: FluentAssertions para testes mais legíveis
+- **Teste de Arquitetura**: NetArchTest
+
+---
+
+## 4. Guia de Execução Local
+
+Siga estes passos para clonar, configurar e executar a aplicação em um ambiente local.
 
 ### Pré-requisitos
 
-- .NET 9 SDK
-- Docker
+- **[.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)** instalado.
+- Uma instância do **SQL Server** rodando localmente (pode ser a versão Express, Developer ou o LocalDB, que já vem com o Visual Studio).
 
-### 1. Iniciar o Banco de Dados SQL Server com Docker
+### Passo a Passo
 
-Execute o comando abaixo no seu terminal para iniciar uma instância do SQL Server em um contêiner Docker. Substitua `yourStrong(!)Password` pela mesma senha definida no `appsettings.json`.
+1.  **Clone o Repositório**
 
-```bash
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
-```
+    ```bash
+    git clone https://github.com/SEU_USUARIO/FiscalDocuments.git
+    cd FiscalDocuments
+    ```
 
-### 2. Rodar a Aplicação
+2.  **Configure a Connection String**
 
-Navegue até a pasta do projeto da API e execute o comando para iniciar a aplicação.
+    - Abra o arquivo `src/FiscalDocuments.Api/appsettings.json`.
+    - Localize a seção `ConnectionStrings` e ajuste o valor de `DefaultConnection` para apontar para a sua instância do SQL Server.
+    - **Exemplo para SQL Server LocalDB (padrão do Visual Studio):**
+      ```json
+      "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=FiscalDocumentsDb;Trusted_Connection=True;"
+      ```
+    - **Exemplo para SQL Server Express:**
+      ```json
+      "DefaultConnection": "Server=.\\SQLEXPRESS;Database=FiscalDocumentsDb;Trusted_Connection=True;"
+      ```
 
-```bash
-cd src/FiscalDocuments.Api
-dotnet run
-```
+3.  **Aplique as Migrations para Criar o Banco**
 
-### 3. Aplicar as Migrations (Criar o Banco de Dados)
+    - Abra um terminal na raiz do projeto e execute o comando a seguir. Ele irá criar o banco de dados `FiscalDocumentsDb` com a estrutura de tabelas correta.
 
-Com a aplicação rodando (ou em um terminal separado), execute o comando a seguir para aplicar as migrations do Entity Framework e criar a estrutura do banco de dados.
+    ```bash
+    dotnet ef database update --project src/FiscalDocuments.Infrastructure --startup-project src/FiscalDocuments.Api
+    ```
 
-```bash
-dotnet ef database update --project ../FiscalDocuments.Infrastructure --startup-project .
-```
+4.  **Execute a Aplicação**
 
-## Como Rodar os Testes
+    - Navegue até a pasta do projeto da API e inicie a aplicação:
 
-Para executar todos os testes (unitários, de integração e de arquitetura), rode o seguinte comando a partir da raiz do projeto:
+    ```bash
+    cd src/FiscalDocuments.Api
+    dotnet run
+    ```
+
+5.  **Acesse a Documentação da API (Swagger)**
+    - Com a aplicação rodando, abra seu navegador e acesse a UI do Swagger para interagir com os endpoints:
+    - **https://localhost:PORTA/swagger** (a porta exata será exibida no terminal, geralmente algo como 7171).
+
+---
+
+## 5. Como Executar os Testes
+
+A solução contém uma suíte completa de testes para garantir a qualidade e a corretude do código.
+
+- **Testes Unitários**: Validam a lógica de negócio nos _Handlers_ de forma isolada.
+- **Testes de Integração**: Verificam o fluxo completo, desde o endpoint da API até o banco de dados de teste (usando SQLite em memória para garantir o isolamento).
+- **Testes de Arquitetura**: Garantem que as dependências entre as camadas estão corretas (ex: a camada de Domínio não depende da Infraestrutura).
+
+Para executar todos os testes, rode o seguinte comando na raiz do projeto:
 
 ```bash
 dotnet test
+
 ```
-
-## Documentação da API
-
-Após iniciar a aplicação, a documentação completa da API, gerada pelo Swagger, estará disponível em:
-
-**https://localhost:&lt;porta&gt;/swagger**
-
-Substitua `<porta>` pela porta na qual a aplicação está rodando (geralmente definida no arquivo `Properties/launchSettings.json`).
-
-## Melhorias Futuras
-
-- **Processamento Assíncrono de XML**: Para a ingestão de um grande volume de arquivos, o processamento do XML poderia ser movido para uma fila (como RabbitMQ ou Azure Service Bus) e processado por um worker em background. Isso tornaria o endpoint de upload mais rápido e resiliente.
-- **Validação Robusta de XML**: Implementar uma biblioteca especializada em documentos fiscais para validar a estrutura e as regras de negócio dos diferentes tipos de XML (NFe, CTe, NFSe).
-- **Logging e Monitoramento Avançado**: Integrar uma solução de logging estruturado (como Serilog) e ferramentas de monitoramento de performance (APM) para observar a saúde da aplicação em produção.
-- **Autenticação e Autorização**: Proteger os endpoints com um mecanismo de autenticação e autorização, como JWT (JSON Web Tokens).
-- **Testes de Carga**: Criar um projeto de teste de carga com ferramentas como k6 ou NBomber para medir o desempenho da API sob estresse.
