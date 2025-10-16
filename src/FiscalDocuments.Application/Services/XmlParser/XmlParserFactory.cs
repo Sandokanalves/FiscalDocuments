@@ -3,7 +3,7 @@ using FiscalDocuments.Application.Common.Interfaces;
 
 namespace FiscalDocuments.Application.Services.XmlParser;
 
-public class XmlParserFactory
+public class XmlParserFactory : IXmlParserFactory
 {
     private readonly IEnumerable<IXmlParserStrategy> _strategies;
 
@@ -18,4 +18,5 @@ public class XmlParserFactory
         return strategy ?? throw new NotSupportedException("Tipo de documento XML não suportado.");
     }
 }
+
 

@@ -24,7 +24,7 @@ builder.Services.AddScoped<IFiscalDocumentRepository, FiscalDocumentRepository>(
 builder.Services.AddScoped<IXmlParserStrategy, NfeParserStrategy>();
 builder.Services.AddScoped<IXmlParserStrategy, CteParserStrategy>();
 builder.Services.AddScoped<IXmlParserStrategy, NfseParserStrategy>();
-builder.Services.AddScoped<XmlParserFactory>();
+builder.Services.AddScoped<IXmlParserFactory, XmlParserFactory>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
@@ -46,4 +46,5 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { }
+
 

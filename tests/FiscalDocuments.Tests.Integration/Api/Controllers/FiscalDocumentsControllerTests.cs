@@ -19,26 +19,22 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
         builder.ConfigureServices(services =>
         {
-            // Remover qualquer registro de DbContext que possa ter vindo do Program.cs
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
             if (descriptor != null)
             {
                 services.Remove(descriptor);
             }
 
-            // Adicionar o DbContext para usar o banco de dados em memória SQLite
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlite("DataSource=file:inmem?mode=memory&cache=shared");
             });
 
-            // Construir o provedor de serviços para obter uma instância do DbContext
             var sp = services.BuildServiceProvider();
             using (var scope = sp.CreateScope())
             {
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<AppDbContext>();
-                // Garantir que o banco de dados seja criado
                 db.Database.EnsureCreated();
             }
         });
@@ -57,10 +53,8 @@ public class FiscalDocumentsControllerTests : IClassFixture<CustomWebApplication
     [Fact]
     public async Task GetDocumentById_Should_ReturnNotFound_WhenDocumentDoesNotExist()
     {
-        // Act
         var response = await _client.GetAsync($"/api/fiscaldocuments/{Guid.NewGuid()}");
 
-        // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }

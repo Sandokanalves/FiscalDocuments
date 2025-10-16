@@ -25,7 +25,7 @@ public class GetFiscalDocumentByIdQueryHandlerTests
         var documentId = Guid.NewGuid();
         var address = new Address("street", "123", "district", "3550308", "Sao Paulo", "SP", "01000000");
         var fiscalDocument = new FiscalDocument(
-            "access-key", 55, 1, 123, DateTime.UtcNow,
+            "access-key", 55, "1", 123, DateTime.UtcNow,
             "Issuer Name", "11111111000111", address,
             "Recipient Name", "22222222000122", address,
             100, 100
@@ -57,4 +57,5 @@ public class GetFiscalDocumentByIdQueryHandlerTests
         result.Should().BeNull();
     }
 }
+
 

@@ -1,5 +1,5 @@
 using System.Xml.Linq;
-using FiscalDocuments.Application.Services.XmlParser;
+using FiscalDocuments.Application.Common.Interfaces;
 using FiscalDocuments.Domain.Interfaces;
 using MediatR;
 
@@ -8,9 +8,9 @@ namespace FiscalDocuments.Application.Features.FiscalDocuments.Commands.Upload;
 public class UploadFiscalDocumentCommandHandler : IRequestHandler<UploadFiscalDocumentCommand, Guid>
 {
     private readonly IFiscalDocumentRepository _repository;
-    private readonly XmlParserFactory _xmlParserFactory;
+    private readonly IXmlParserFactory _xmlParserFactory;
 
-    public UploadFiscalDocumentCommandHandler(IFiscalDocumentRepository repository, XmlParserFactory xmlParserFactory)
+    public UploadFiscalDocumentCommandHandler(IFiscalDocumentRepository repository, IXmlParserFactory xmlParserFactory)
     {
         _repository = repository;
         _xmlParserFactory = xmlParserFactory;
@@ -41,4 +41,5 @@ public class UploadFiscalDocumentCommandHandler : IRequestHandler<UploadFiscalDo
         return fiscalDocument.Id;
     }
 }
+
 

@@ -19,7 +19,6 @@ public class ArchitectureTests
     [Fact]
     public void Domain_Should_Not_HaveDependencyOnOtherProjects()
     {
-        // Arrange
         var otherProjects = new[]
         {
             ApplicationAssembly.GetName().Name,
@@ -27,15 +26,14 @@ public class ArchitectureTests
             ApiAssembly.GetName().Name
         };
 
-        // Act
         var result = Types
             .InAssembly(DomainAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(otherProjects)
             .GetResult();
 
-        // Assert
         result.IsSuccessful.Should().BeTrue();
     }
 }
+
 
