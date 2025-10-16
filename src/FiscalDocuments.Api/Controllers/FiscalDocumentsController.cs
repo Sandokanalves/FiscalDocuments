@@ -43,8 +43,6 @@ public class FiscalDocumentsController : MainController
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateDocument(Guid id, [FromBody] UpdateFiscalDocumentCommand command)
     {
-        // A validação que compara 'id' da rota com 'command.Id' agora é feita
-        // automaticamente pelo UpdateFiscalDocumentCommandValidator.
         return await _mediator.Send(command) ? NoContent() : NotFound();
     }
 
@@ -54,5 +52,6 @@ public class FiscalDocumentsController : MainController
         return await _mediator.Send(new DeleteFiscalDocumentCommand { Id = id }) ? NoContent() : NotFound();
     }
 }
+
 
 
