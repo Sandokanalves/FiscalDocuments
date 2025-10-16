@@ -19,6 +19,9 @@ public class FiscalDocumentConfiguration : IEntityTypeConfiguration<FiscalDocume
         builder.HasIndex(f => f.AccessKey)
             .IsUnique();
 
+        builder.Property(f => f.Series)
+            .HasMaxLength(10);
+
         builder.Property(f => f.IssuerCnpj)
             .HasMaxLength(14)
             .IsRequired();
@@ -57,5 +60,6 @@ public class FiscalDocumentConfiguration : IEntityTypeConfiguration<FiscalDocume
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
+
 
 

@@ -7,7 +7,7 @@ public class FiscalDocument
     public Guid Id { get; private set; }
     public string AccessKey { get; private set; } = string.Empty;
     public int Model { get; private set; }
-    public int Series { get; private set; }
+    public string Series { get; private set; } = string.Empty;
     public int DocumentNumber { get; private set; }
     public DateTime IssueDate { get; private set; }
 
@@ -44,7 +44,7 @@ public class FiscalDocument
     }
 
     public FiscalDocument(
-        string accessKey, int model, int series, int documentNumber, DateTime issueDate,
+        string accessKey, int model, string series, int documentNumber, DateTime issueDate,
         string issuerName, string issuerCnpj, Address issuerAddress,
         string recipientName, string recipientDocument, Address recipientAddress,
         decimal totalProducts, decimal totalAmount)
@@ -66,6 +66,7 @@ public class FiscalDocument
         CreatedAt = DateTime.UtcNow;
     }
 }
+
 
 
 

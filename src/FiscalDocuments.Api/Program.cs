@@ -1,8 +1,9 @@
+using FiscalDocuments.Application.Common.Interfaces;
+using FiscalDocuments.Application.Features.FiscalDocuments.Commands.Upload;
+using FiscalDocuments.Application.Services.XmlParser;
 using FiscalDocuments.Domain.Interfaces;
 using FiscalDocuments.Infrastructure.Persistence.Context;
 using FiscalDocuments.Infrastructure.Persistence.Repositories;
-using System.Reflection;
-using FiscalDocuments.Application.Features.FiscalDocuments.Commands.Upload;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,11 @@ if (!builder.Environment.IsEnvironment("Testing"))
 }
 
 builder.Services.AddScoped<IFiscalDocumentRepository, FiscalDocumentRepository>();
+
+builder.Services.AddScoped<IXmlParserStrategy, NfeParserStrategy>();
+builder.Services.AddScoped<IXmlParserStrategy, CteParserStrategy>();
+builder.Services.AddScoped<IXmlParserStrategy, NfseParserStrategy>();
+builder.Services.AddScoped<XmlParserFactory>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
@@ -40,15 +46,4 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { }
-
-
-
-
-
-
-
-
-
-
-
 

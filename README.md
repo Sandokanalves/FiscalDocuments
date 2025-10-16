@@ -2,7 +2,7 @@
 
 ## 1. Visão Geral do Projeto
 
-Esta API RESTful, desenvolvida em ASP.NET Core 9, oferece uma solução robusta e escalável para o recebimento, armazenamento e consulta de documentos fiscais eletrônicos (NFe, CTe, etc.). O projeto foi construído seguindo as melhores práticas de engenharia de software, com foco em qualidade de código, manutenibilidade e testabilidade.
+Esta API RESTful, desenvolvida em ASP.NET Core 9, oferece uma solução robusta e extensível para o recebimento, armazenamento e consulta de múltiplos tipos de documentos fiscais eletrônicos (NF-e, CT-e, NFS-e). O projeto foi construído seguindo as melhores práticas de engenharia de software, com foco em qualidade de código, manutenibilidade e testabilidade.
 
 O principal objetivo é fornecer uma retaguarda confiável para sistemas que precisam processar e gerenciar um grande volume de documentos fiscais, garantindo a integridade dos dados, a performance das consultas e a segurança das informações.
 
@@ -22,23 +22,17 @@ A solução é organizada em múltiplos projetos (`.csproj`), onde cada projeto 
 
 ### Princípios e Padrões Aplicados
 
-- **Princípios SOLID**:
+- **Princípios SOLID**: Todos os cinco princípios foram seguidos para garantir um código coeso, desacoplado e de fácil manutenção.
 
-  - **S (Single Responsibility Principle)**: Cada classe tem uma única responsabilidade.
-  - **O (Open/Closed Principle)**: A arquitetura é aberta para extensão e fechada para modificação.
-  - **L (Liskov Substitution Principle)**: As abstrações são implementadas de forma a garantir a substituibilidade.
-  - **I (Interface Segregation Principle)**: Interfaces são pequenas e focadas, como `IFiscalDocumentRepository`.
-  - **D (Dependency Inversion Principle)**: As dependências são invertidas através de interfaces, com o auxílio da Injeção de Dependência.
+- **Domain-Driven Design (DDD)**: O coração da aplicação, a camada de **Domínio**, foi modelada para refletir as regras de negócio, com a entidade `FiscalDocument` atuando como a raiz de agregação.
 
-- **Domain-Driven Design (DDD)**: O coração da aplicação, a camada de **Domínio**, foi modelada para refletir as regras de negócio.
+- **Padrão CQRS (Command Query Responsibility Segregation)**: A aplicação combina DDD com o padrão CQRS, utilizando a biblioteca **MediatR**, para separar claramente as operações de escrita (Commands) e leitura (Queries).
 
-  - **Agregado**: A entidade `FiscalDocument` atua como a raiz de agregação.
-  - **Value Objects**: Objetos como `Address` são modelados como imutáveis.
-
-- **Padrão CQRS (Command Query Responsibility Segregation)**: A aplicação combina DDD com o padrão CQRS, utilizando a biblioteca **MediatR**.
-  - **Commands**: Representam operações de escrita (Create, Update, Delete) e encapsulam toda a lógica para executar uma ação.
-  - **Queries**: Representam operações de leitura e são otimizadas para retornar DTOs (Data Transfer Objects).
-  - **Benefícios**: Esta combinação simplifica a lógica, permite otimizações independentes para leitura e escrita, e torna os casos de uso explícitos e fáceis de encontrar no código.
+- **Strategy Pattern para Parsing de XML**: Para suportar múltiplos tipos de documentos (NF-e, CT-e, NFS-e), foi implementado o Strategy Pattern.
+  - **Interface `IXmlParserStrategy`**: Define um contrato comum para todos os parsers.
+  - **Estratégias Concretas**: `NfeParserStrategy`, `CteParserStrategy` e `NfseParserStrategy` implementam a lógica de parsing específica para cada tipo de documento.
+  - **`XmlParserFactory`**: Uma fábrica é responsável por selecionar a estratégia correta com base no conteúdo do XML recebido.
+  - **Benefícios**: Este padrão torna o sistema altamente extensível. Para suportar um novo tipo de documento no futuro, basta criar uma nova classe de estratégia, sem a necessidade de alterar o código existente.
 
 ---
 
@@ -71,7 +65,7 @@ A solução é organizada em múltiplos projetos (`.csproj`), onde cada projeto 
     cd FiscalDocuments
     ```
 2.  **Configure a Connection String**
-    - Abra o arquivo `src/FiscalDocuments.Api/appsettings.json` e ajuste a `DefaultConnection`.
+    - Abra o arquivo `src/FiscalDocuments.Api/appsettings.json` e ajuste a `DefaultConnection` para sua instância do SQL Server local.
 3.  **Aplique as Migrations**
     ```bash
     dotnet ef database update --project src/FiscalDocuments.Infrastructure --startup-project src/FiscalDocuments.Api
