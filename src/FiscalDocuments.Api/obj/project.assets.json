@@ -1721,7 +1721,10 @@
         },
         "runtime": {
           "bin/placeholder/FiscalDocuments.Application.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "FiscalDocuments.Domain/1.0.0": {
         "type": "project",

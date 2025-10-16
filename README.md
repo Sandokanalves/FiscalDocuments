@@ -10,25 +10,35 @@ O principal objetivo é fornecer uma retaguarda confiável para sistemas que pre
 
 ## 2. Decisões de Arquitetura e Princípios
 
-A espinha dorsal do projeto é a **Arquitetura Limpa (Clean Architecture)**. Essa escolha não foi acidental; ela visa criar um sistema com baixo acoplamento, alta coesão e clara separação de responsabilidades, resultando em um software mais fácil de manter, testar e evoluir.
+A espinha dorsal do projeto é a **Arquitetura Limpa (Clean Architecture)**. Essa escolha não foi acidental; ela visa criar um sistema com baixo acoplamento, alta coesão e clara separação de responsabilidades.
 
-Os seguintes princípios e padrões foram rigorosamente aplicados:
+### Estrutura da Solução (Múltiplos Projetos)
+
+A solução é organizada em múltiplos projetos (`.csproj`), onde cada projeto representa uma camada da Arquitetura Limpa (`Domain`, `Application`, `Infrastructure`, etc.). Esta é uma prática fundamental para:
+
+- **Garantir o Isolamento**: O compilador impede referências indevidas (ex: a camada de `Domain` não pode depender da `Infrastructure`).
+- **Controlar Dependências**: A direção das dependências aponta sempre para o centro (`Domain`), protegendo as regras de negócio de mudanças em tecnologias externas.
+- **Facilitar a Manutenção**: A separação clara de responsabilidades torna o código mais fácil de entender, manter e testar.
+
+### Princípios e Padrões Aplicados
 
 - **Princípios SOLID**:
 
-  - **S (Single Responsibility Principle)**: Cada classe e método tem uma única responsabilidade. Por exemplo, os _Handlers_ do MediatR cuidam de uma única operação (um Command ou uma Query).
-  - **O (Open/Closed Principle)**: A arquitetura é aberta para extensão (novos casos de uso) e fechada para modificação (as camadas centrais não são alteradas).
-  - **L (Liskov Substitution Principle)**: As abstrações (interfaces) são implementadas de forma a garantir a substituibilidade sem quebrar o sistema.
-  - **I (Interface Segregation Principle)**: Interfaces são pequenas e focadas, como a `IFiscalDocumentRepository`, que define apenas o contrato necessário para a persistência.
-  - **D (Dependency Inversion Principle)**: As camadas mais internas (Domínio) não dependem das camadas externas (Infraestrutura). A dependência é invertida através de interfaces, implementadas com a Injeção de Dependência nativa do ASP.NET Core.
+  - **S (Single Responsibility Principle)**: Cada classe tem uma única responsabilidade.
+  - **O (Open/Closed Principle)**: A arquitetura é aberta para extensão e fechada para modificação.
+  - **L (Liskov Substitution Principle)**: As abstrações são implementadas de forma a garantir a substituibilidade.
+  - **I (Interface Segregation Principle)**: Interfaces são pequenas e focadas, como `IFiscalDocumentRepository`.
+  - **D (Dependency Inversion Principle)**: As dependências são invertidas através de interfaces, com o auxílio da Injeção de Dependência.
 
-- **Domain-Driven Design (DDD)**: O coração da aplicação, a camada de **Domínio**, foi modelada para refletir a linguagem e as regras de negócio do problema.
+- **Domain-Driven Design (DDD)**: O coração da aplicação, a camada de **Domínio**, foi modelada para refletir as regras de negócio.
 
-  - **Agregado**: A entidade `FiscalDocument` atua como a raiz de agregação, garantindo a consistência de seus objetos internos, como a coleção de `ProductItem`.
-  - **Value Objects**: Objetos como `Address` foram modelados como imutáveis, representando conceitos que são definidos por seus atributos, não por uma identidade.
+  - **Agregado**: A entidade `FiscalDocument` atua como a raiz de agregação.
+  - **Value Objects**: Objetos como `Address` são modelados como imutáveis.
 
-- **Padrão CQRS (Command Query Responsibility Segregation)**: A separação entre operações de escrita (Commands) e leitura (Queries) foi implementada com a biblioteca **MediatR**.
-  - **Benefícios**: Simplifica a lógica, permite otimizações independentes para leitura e escrita, e torna os casos de uso explícitos e fáceis de encontrar no código.
+- **Padrão CQRS (Command Query Responsibility Segregation)**: A aplicação combina DDD com o padrão CQRS, utilizando a biblioteca **MediatR**.
+  - **Commands**: Representam operações de escrita (Create, Update, Delete) e encapsulam toda a lógica para executar uma ação.
+  - **Queries**: Representam operações de leitura e são otimizadas para retornar DTOs (Data Transfer Objects).
+  - **Benefícios**: Esta combinação simplifica a lógica, permite otimizações independentes para leitura e escrita, e torna os casos de uso explícitos e fáceis de encontrar no código.
 
 ---
 
@@ -40,77 +50,58 @@ Os seguintes princípios e padrões foram rigorosamente aplicados:
 - **ORM**: Entity Framework Core 9
 - **Padrão de Comunicação**: CQRS com MediatR
 - **Validação**: FluentValidation
-- **Testes**: xUnit para testes unitários, de integração e de arquitetura
-- **Assertions**: FluentAssertions para testes mais legíveis
+- **Testes**: xUnit
+- **Assertions**: FluentAssertions
 - **Teste de Arquitetura**: NetArchTest
 
 ---
 
 ## 4. Guia de Execução Local
 
-Siga estes passos para clonar, configurar e executar a aplicação em um ambiente local.
-
 ### Pré-requisitos
 
-- **[.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)** instalado.
-- Uma instância do **SQL Server** rodando localmente (pode ser a versão Express, Developer ou o LocalDB, que já vem com o Visual Studio).
+- **.NET 9 SDK** instalado.
+- Uma instância do **SQL Server** rodando localmente (Express, Developer ou LocalDB).
 
 ### Passo a Passo
 
 1.  **Clone o Repositório**
-
     ```bash
     git clone https://github.com/SEU_USUARIO/FiscalDocuments.git
     cd FiscalDocuments
     ```
-
 2.  **Configure a Connection String**
-
-    - Abra o arquivo `src/FiscalDocuments.Api/appsettings.json`.
-    - Localize a seção `ConnectionStrings` e ajuste o valor de `DefaultConnection` para apontar para a sua instância do SQL Server.
-    - **Exemplo para SQL Server LocalDB (padrão do Visual Studio):**
-      ```json
-      "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=FiscalDocumentsDb;Trusted_Connection=True;"
-      ```
-    - **Exemplo para SQL Server Express:**
-      ```json
-      "DefaultConnection": "Server=.\\SQLEXPRESS;Database=FiscalDocumentsDb;Trusted_Connection=True;"
-      ```
-
-3.  **Aplique as Migrations para Criar o Banco**
-
-    - Abra um terminal na raiz do projeto e execute o comando a seguir. Ele irá criar o banco de dados `FiscalDocumentsDb` com a estrutura de tabelas correta.
-
+    - Abra o arquivo `src/FiscalDocuments.Api/appsettings.json` e ajuste a `DefaultConnection`.
+3.  **Aplique as Migrations**
     ```bash
     dotnet ef database update --project src/FiscalDocuments.Infrastructure --startup-project src/FiscalDocuments.Api
     ```
-
 4.  **Execute a Aplicação**
-
-    - Navegue até a pasta do projeto da API e inicie a aplicação:
-
     ```bash
     cd src/FiscalDocuments.Api
     dotnet run
     ```
-
-5.  **Acesse a Documentação da API (Swagger)**
-    - Com a aplicação rodando, abra seu navegador e acesse a UI do Swagger para interagir com os endpoints:
-    - **https://localhost:PORTA/swagger** (a porta exata será exibida no terminal, geralmente algo como 7171).
+5.  **Acesse a Documentação (Swagger)**
+    - Abra o navegador em `https://localhost:PORTA/swagger`.
 
 ---
 
 ## 5. Como Executar os Testes
 
-A solução contém uma suíte completa de testes para garantir a qualidade e a corretude do código.
-
-- **Testes Unitários**: Validam a lógica de negócio nos _Handlers_ de forma isolada.
-- **Testes de Integração**: Verificam o fluxo completo, desde o endpoint da API até o banco de dados de teste (usando SQLite em memória para garantir o isolamento).
-- **Testes de Arquitetura**: Garantem que as dependências entre as camadas estão corretas (ex: a camada de Domínio não depende da Infraestrutura).
-
-Para executar todos os testes, rode o seguinte comando na raiz do projeto:
+Para executar a suíte completa de testes (unitários, integração e arquitetura), rode o comando na raiz do projeto:
 
 ```bash
 dotnet test
-
 ```
+
+---
+
+## 6. Melhorias Futuras
+
+Embora a solução atual seja robusta, os seguintes pontos poderiam ser implementados para evoluir o projeto:
+
+- **Autenticação e Autorização**: Implementar segurança nos endpoints utilizando JWT (JSON Web Tokens) e políticas de autorização.
+- **Processamento Assíncrono com Filas**: Para o upload de arquivos, utilizar um sistema de mensageria (como RabbitMQ ou Azure Service Bus) para processar os documentos em background, tornando a API mais resiliente e escalável.
+- **Logging e Monitoramento Avançado**: Integrar uma ferramenta de logging estruturado (como Serilog com um sink para Seq ou Datadog) e monitoramento de performance (APM) para observar a saúde da aplicação em produção.
+- **Testes de Carga**: Adicionar um projeto de testes de carga (usando k6 ou NBomber) para validar a performance da API sob estresse e identificar gargalos.
+- **Resiliência e Padrões de Retentativa**: Implementar políticas de resiliência (como Retry e Circuit Breaker com Polly) nas chamadas a serviços externos, se aplicável.

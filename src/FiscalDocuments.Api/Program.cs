@@ -20,6 +20,7 @@ if (!builder.Environment.IsEnvironment("Testing"))
 
 builder.Services.AddScoped<IFiscalDocumentRepository, FiscalDocumentRepository>();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -39,6 +40,7 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { }
+
 
 
 

@@ -18,7 +18,15 @@ public class UploadFiscalDocumentCommandHandler : IRequestHandler<UploadFiscalDo
 
     public async Task<Guid> Handle(UploadFiscalDocumentCommand request, CancellationToken cancellationToken)
     {
-        var xmlDoc = XDocument.Parse(request.XmlContent);
+        if (request.File == null || request.File.Length == 0)
+        {
+            throw new ArgumentException("Arquivo inválido.", nameof(request.File));
+        }
+
+        using var reader = new StreamReader(request.File.OpenReadStream());
+        var xmlContent = await reader.ReadToEndAsync(cancellationToken);
+
+        var xmlDoc = XDocument.Parse(xmlContent);
         var ns = xmlDoc.Root?.GetDefaultNamespace() ?? XNamespace.None;
 
         var infNFe = xmlDoc.Descendants(ns + "infNFe").FirstOrDefault();
