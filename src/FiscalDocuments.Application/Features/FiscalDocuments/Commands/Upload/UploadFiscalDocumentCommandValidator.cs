@@ -6,8 +6,10 @@ public class UploadFiscalDocumentCommandValidator : AbstractValidator<UploadFisc
 {
     public UploadFiscalDocumentCommandValidator()
     {
-        RuleFor(x => x.XmlContent)
-            .NotEmpty().WithMessage("O conteúdo do XML não pode ser vazio.");
+        RuleFor(x => x.File)
+            .NotNull().WithMessage("O arquivo não pode ser nulo.")
+            .Must(x => x.Length > 0).WithMessage("O arquivo não pode estar vazio.");
     }
 }
+
 
